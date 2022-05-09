@@ -31,8 +31,8 @@
 #include <pulse/error.h>
 #include <pulse/gccmacro.h>
 
-#define	MXRECTIME XXX			// maximum record time in seconds
-#define	SRATE	XXX			// sample rate in Hz
+#define	MXRECTIME 120			// maximum record time in seconds
+#define	SRATE	12000			// sample rate in Hz
 #define	MXFRAMES (MXRECTIME*SRATE)	// number of frames to read/write
 #define	CHANNELS 1			// number of channels
 #define BYTESPERSAMPLE 2		// 16 bit samples
@@ -44,7 +44,7 @@ parec(short *pabuf, int npoints) {
     /* The sample type to use */
     static const pa_sample_spec ss = 
     {
-        .format = XXX,
+        .format = PA_SAMPLE_S16LE,
         .rate = SRATE,
         .channels = CHANNELS
     };

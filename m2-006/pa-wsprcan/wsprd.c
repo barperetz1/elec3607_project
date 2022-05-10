@@ -140,6 +140,7 @@ unsigned long readwavfile(char *ptr_to_infile, int ntrmin, double *idat, double 
         return 1;
     }
     if (ptr_to_infile == NULL){
+        printf("paudiomode1")
         extern int parec(short *pabuf, int npoints);
         nr = parec(buf2, npoints);
     }
@@ -606,7 +607,7 @@ int main(int argc, char *argv[])
     char wisdom_fname[200],all_fname[200],spots_fname[200];
     char timer_fname[200],hash_fname[200];
     char uttime[5],date[7];
-    int c,delta,maxpts=65536,verbose=0,quickmode=0,more_candidates=0, stackdecoder=0, pulsemode = 0;
+    int c,delta,maxpts=65536,verbose=0,quickmode=0,more_candidates=0, stackdecoder=0, paudiomode = 0;
     int writenoise=0,usehashtable=1,wspr_type=2, ipass;
     int writec2=0, npasses=2, subtraction=1;
     int shift1, lagmin, lagmax, lagstep, ifmin, ifmax, worth_a_try, not_decoded;
@@ -685,7 +686,7 @@ int main(int argc, char *argv[])
     while ( (c = getopt(argc, argv, "pa:cC:de:f:HJmqstwvz:")) !=-1 ) {
         switch (c) {
           case 'p':
-              pulsemode = 1;
+              paudiomode = 1;
               break;
             case 'q':  //no shift jittering
                 quickmode = 1;
@@ -743,8 +744,8 @@ int main(int argc, char *argv[])
         stack=malloc(stacksize*sizeof(struct snode));
     }
 
-    if( pulsemode || optind+1 > argc) {
-        pulsemode = 1;
+    if( paudiomode || optind+1 > argc) {
+        paudiomode = 1;
         ptr_to_infile = "";
     } else {
         ptr_to_infile=argv[optind];
@@ -805,7 +806,8 @@ int main(int argc, char *argv[])
 
         dialfreq=dialfreq_cmdline - (dialfreq_error*1.0e-06);
     }
-    else if(pulsemode){
+    else if(paudiomode){
+        printf("paudiomode2")
         ptr_to_infile = "abcd.wav";
         ptr_to_infile_suffix=strstr(ptr_to_infile,".wav");
 
